@@ -4,12 +4,22 @@
   "description": "Wire ESLint config",
   "repository": "https://github.com/wireapp/wire-web-packages/tree/main/packages/eslint-config",
   "main": "eslintrc.js",
-  "version": "3.1.9",
+  "exports": {
+    ".": {
+      "require": "./eslintrc.js",
+      "import": "./eslintrc.js",
+      "default": "./eslintrc.js"
+    },
+    "./flat": "./eslint.config.mjs",
+    "./legacy": "./eslintrc.js"
+  },
+  "version": "3.2.0",
   "peerDependencies": {
     "eslint": "^8",
     "prettier": "^3"
   },
   "dependencies": {
+    "@tony.ganchev/eslint-plugin-header": "^3.3.3",
     "@types/eslint": "^8",
     "@types/prettier": "^3",
     "@typescript-eslint/eslint-plugin": "7.17.0",
@@ -32,6 +42,7 @@
     "eslint-plugin-simple-import-sort": "^12.0.0",
     "eslint-plugin-testing-library": "^7.0.0",
     "eslint-plugin-unused-imports": "^4",
+    "globals": "^15.0.0",
     "prettier": "^3",
     "typescript": "^5"
   }

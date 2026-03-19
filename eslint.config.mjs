@@ -1,21 +1,11 @@
 import * as emotion from "@emotion/eslint-plugin";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
+import wireConfig from "@wireapp/eslint-config/flat";
 import globals from "globals";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all
-});
 
 export default [
   {
     ignores: [
+      "**/node_modules/**",
       "**/lib/**",
       "**/dist/**",
       "**/coverage/**",
@@ -33,16 +23,18 @@ export default [
       "**/*hot-update.js*",
       "**/*.env",
       ".git/**",
-      "archive/**"
+      "archive/**",
     ]
   },
 
-  ...compat.extends("@wireapp/eslint-config").map((config) => ({
-    ...config,
-    files: [...config.files || [], "**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"]
-  })),
+  ...wireConfig.map((config) =>
+    config.ignores ? config : {
+      ...config,
+      files: [...(config.files || []), "**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"]
+    }),
 
   {
+    name: "main",
     files: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"],
     plugins: {
       "@emotion": emotion,
@@ -79,6 +71,7 @@ export default [
       "jsx-a11y/label-has-associated-control": "warn",
       "jsx-a11y/heading-has-content": "warn",
       "@typescript-eslint/no-floating-promises": "warn",
+
       // Differences from legacy config.
       "no-unused-vars": "off",
       "no-empty": "off",
@@ -89,6 +82,7 @@ export default [
   },
 
   {
+    name: "stories",
     files: ["src/stories/**/*", "**/*.stories.*"],
     rules: {
       "import/no-default-export": "off"
@@ -96,6 +90,7 @@ export default [
   },
 
   {
+    name: "tests",
     files: ["**/*.test.ts", "**/*.test.tsx"],
     rules: {
       "no-async-promise-executor": "off"

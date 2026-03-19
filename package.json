@@ -3,8 +3,6 @@
     "@babel/core": "^7.19.6",
     "@babel/eslint-parser": "^7.19.1",
     "@emotion/eslint-plugin": "^11.10.0",
-    "@eslint/eslintrc": "^3.0.0",
-    "@eslint/js": "8.57.0",
     "@lerna-lite/changed": "4.11.0",
     "@lerna-lite/cli": "3.12.1",
     "@lerna-lite/publish": "4.11.1",

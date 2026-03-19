@@ -16,6 +16,7 @@ For licensing information, see the attached LICENSE file and the list of third-p
 
 ```bash
 yarn add -D @types/eslint \
+@tony.ganchev/eslint-plugin-header \
 @types/prettier \
 @typescript-eslint/eslint-plugin \
 @typescript-eslint/parser \
@@ -45,6 +46,7 @@ typescript
 
 ```powershell
 yarn add -D @types/eslint ^
+@tony.ganchev/eslint-plugin-header ^
 @types/prettier ^
 @typescript-eslint/eslint-plugin ^
 @typescript-eslint/parser ^
@@ -70,11 +72,38 @@ prettier ^
 typescript
 ```
 
-**Edit `.eslintrc.json`**:
+**Edit `.eslintrc.json` (Legacy)**:
 
 ```jsonc
 {
   // ...
   "extends": "@wireapp/eslint-config",
 }
+```
+
+**Edit `eslint.config.mjs` (Flat Config)**:
+
+```javascript
+import wireConfig from '@wireapp/eslint-config/flat';
+
+export default [
+  ...wireConfig,
+  // Your overrides...
+];
+```
+
+Note that you may want ot constraint the config to specific files by augmenting
+the objects of the config array with the `files` property.
+
+```javascript
+import wireConfig from '@wireapp/eslint-config/flat';
+
+export default [
+  ...wireConfig.map((config) =>
+      config.ignores ? config : {
+        ...config,
+        files: [...(config.files || []), "**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"]
+      }),
+  // Your overrides...
+];
 ```
